@@ -4,6 +4,14 @@ from __future__ import annotations
 
 import argparse
 import logging
+import sys
+from pathlib import Path
+
+# Ensure the repository root is importable when this file is executed directly
+# with: python scripts/run_research.py ...
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
 from agents.cyber_research_agent import CyberResearchAgent
 from app.config import load_config
@@ -14,12 +22,10 @@ from tools.report_exporter import ResearchReport, export_report
 logger = logging.getLogger(__name__)
 
 
-
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Run a defensive cybersecurity research query.")
     parser.add_argument("--query", required=True, help="User query for defensive cybersecurity research")
     return parser
-
 
 
 def main() -> int:
